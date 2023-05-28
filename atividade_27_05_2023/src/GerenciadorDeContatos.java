@@ -1,10 +1,11 @@
 package atividade_27_05_2023;
 
+import java.io.*;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Scanner;
 
-public class GerenciadorDeContatos {
+public class GerenciadorDeContatos implements Serializable {
     private Map<String, String> contatos;
 
     public GerenciadorDeContatos() {
@@ -30,6 +31,26 @@ public class GerenciadorDeContatos {
         }
     }
 
+    public void gravarContatos(String arquivo) {
+        try (FileOutputStream fileOut = new FileOutputStream(arquivo);
+             ObjectOutputStream objOut = new ObjectOutputStream(fileOut)) {
+            objOut.writeObject(contatos);
+            System.out.println("Contatos gravados com sucesso!");
+        } catch (IOException e) {
+            System.out.println("Erro ao gravar contatos: " + e.getMessage());
+        }
+    }
+
+    public void lerContatos(String arquivo) {
+        try (FileInputStream fileIn = new FileInputStream(arquivo);
+             ObjectInputStream objIn = new ObjectInputStream(fileIn)) {
+            contatos = (Map<String, String>) objIn.readObject();
+            System.out.println("Contatos lidos com sucesso!");
+        } catch (IOException | ClassNotFoundException e) {
+            System.out.println("Erro ao ler contatos: " + e.getMessage());
+        }
+    }
+
     public static void main(String[] args) {
         GerenciadorDeContatos gerenciador = new GerenciadorDeContatos();
         Scanner scanner = new Scanner(System.in);
@@ -40,10 +61,12 @@ public class GerenciadorDeContatos {
             System.out.println("2 - Remover contato");
             System.out.println("3 - Buscar número de telefone");
             System.out.println("4 - Exibir contatos");
+            System.out.println("5 - Gravar contatos em arquivo");
+            System.out.println("6 - Ler contatos de arquivo");
             System.out.println("0 - Sair");
 
             int opcao = scanner.nextInt();
-            scanner.nextLine(); // Limpar o buffer do scanner
+            scanner.nextLine(); 
 
             switch (opcao) {
                 case 1:
@@ -73,6 +96,16 @@ public class GerenciadorDeContatos {
                 case 4:
                     gerenciador.exibirContatos();
                     break;
+                case 5:
+                    System.out.println("Digite o nome do arquivo para gravar os contatos:");
+                    String arquivoGravacao = scanner.nextLine();
+                    gerenciador.gravarContatos(arquivoGravacao);
+                    break;
+                case 6:
+                    System.out.println("Digite o nome do arquivo para ler os contatos:");
+                    String arquivoLeitura = scanner.nextLine();
+                    gerenciador.lerContatos(arquivoLeitura);
+                    break;
                 case 0:
                     System.out.println("Encerrando o programa...");
                     return;
@@ -83,3 +116,4 @@ public class GerenciadorDeContatos {
         }
     }
 }
+
