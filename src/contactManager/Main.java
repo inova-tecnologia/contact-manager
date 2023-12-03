@@ -3,28 +3,26 @@ package contactManager;
 import java.util.Scanner;
 
 public class Main {
+	public static void main(String[] args) {
+		ContactManager manager = new ContactManager();
+		Scanner scanner = new Scanner(System.in);
+			
+		while (true) {
+			System.out.println("\nSelect an option:");
+			System.out.println("");
+			System.out.println("1 - Add contact");
+			System.out.println("2 - Remove contact");
+			System.out.println("3 - Search by phone number");
+			System.out.println("4 - Display the contacts list");
+			System.out.println("5 - Save contacts into a file");
+			System.out.println("6 - Read contacts from a file");
+			System.out.println("0 - Exit");
 
-	   public static void main(String[] args) {
-		   
-			ContactManager manager = new ContactManager();
-			Scanner scanner = new Scanner(System.in);
+			int option = scanner.nextInt();
+			scanner.nextLine();
 
-			while (true) {
-			    System.out.println("\nSelect an option:");
-			    System.out.println("");
-			    System.out.println("1 - Add contact");
-			    System.out.println("2 - Remove contact");
-			    System.out.println("3 - Search by phone number");
-			    System.out.println("4 - Display the contacts list");
-			    System.out.println("5 - Save contacts into a file");
-			    System.out.println("6 - Read contacts from a file");
-			    System.out.println("0 - Exit");
-
-			    int option = scanner.nextInt();
-			    scanner.nextLine();
-
-			    switch (option) {
-			        case 1:
+			switch (option) {
+				case 1:
 			            System.out.println("Enter the contact´s name:");
 			            String name = scanner.nextLine();
 			            System.out.println("Enter the contact´s phone number:");
@@ -67,7 +65,7 @@ public class Main {
 			        default:
 			            System.out.println("Invalid option. Please try again.");
 			            break;
-			    }     
-			}
-	    }
+			}     
+		}
+	}
 }
